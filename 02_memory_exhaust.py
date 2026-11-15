@@ -21,3 +21,13 @@ def ensure_vm():
         sys.exit("Nie można potwierdzić pełnej VM. Przerwano.")
     print("Potwierdzona VM; start za 3 s. Przygotuj snapshot.", file=sys.stderr, flush=True)
     time.sleep(3)
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    mode = ap.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--limit-mib", type=int, help="ograniczony eksperyment bez OOM (16-512 MiB)")
+    mode.add_argument("--zniszcz-te-vm", action="store_true", help="pełne OOM — tylko VM")
+    args = ap.parse_args()
+    if args.limit_mib is not None and not 16 <= args.limit_mib <= 512:
+        ap.error("--limit-mib musi mieścić się w 16..512")
