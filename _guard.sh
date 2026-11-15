@@ -28,6 +28,8 @@ sec_lab_guard() {
         echo 'ZABLOKOWANO: nie wykryto pełnej maszyny wirtualnej (kontener/host nie wystarcza).' >&2
         return 11
     fi
-    # --- dalsza część ucięta na zdjęciu; poniższe zamknięcie dopisane, żeby plik był poprawny ---
-    return 0
+    printf 'Wykryto VM: %s. Przed uruchomieniem upewnij się, że istnieje snapshot.\n' "$hint" >&2
+    echo 'Start za 3 sekundy (Ctrl-C anuluje)...' >&2
+    sleep 3
 }
+SEC_LAB_ARGS=("$@")
